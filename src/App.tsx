@@ -55,12 +55,12 @@ const projects = [
 ];
 
 const certificates = [
-  { name: "NPTEL - Digital System Design", image: "images/NPTEL.jpg" },
-  { name: "IBM SkillsBuild", image: "images/IBM.jpg" },
-  { name: "FULL STACK WEB DEVELOPMENT", image: "images/MERN.jpg" },
-  { name: "Cyber Security", image: "images/Cyber.jpg" },
-  { name: "Machine Learning", image: "images/ML.jpg" },
-  { name: "IIT Certified", image: "images/IIT.jpg" }
+  { name: "NPTEL - Digital System Design", image: "/images/NPTEL.jpg" },
+  { name: "IBM SkillsBuild", image: "/images/IBM.jpg" },
+  { name: "FULL STACK WEB DEVELOPMENT", image: "/images/MERN.jpg" },
+  { name: "Cyber Security", image: "/images/Cyber.jpg" },
+  { name: "Machine Learning", image: "/images/ML.jpg" },
+  { name: "IIT Certified", image: "/images/IIT.jpg" }
 ];
 
 // Robot Mascot Component
@@ -506,6 +506,13 @@ type OrbitDef = {
 
 const Skills: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth < 640);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   // tune these to change spacing and speeds
   const orbits: OrbitDef[] = [
@@ -515,7 +522,7 @@ const Skills: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
   ];
 
   const outerRadius = Math.max(...orbits.map(o => o.radius));
-  const bubbleSize = 56; // px (w-14)
+  const bubbleSize = isMobile ? 40 : 56; // px (w-14)
   // container size ensures space for orbit + bubble outside
   const containerSize = outerRadius * 2 + bubbleSize + 40; // extra padding
 
